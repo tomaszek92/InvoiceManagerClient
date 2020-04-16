@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ClientDetailsComponent } from './client-details/client-details.component';
-import { ClientsListComponent } from './clients-list/clients-list.component';
-import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
-import { InvoicesListComponent } from './invoices-list/invoices-list.component';
+import { ClientDetailsComponent } from './clients/client-details/client-details.component';
+import { ClientsListComponent } from './clients/clients-list/clients-list.component';
+import { InvoiceDetailsComponent } from './invoices/invoice-details/invoice-details.component';
+import { InvoicesListComponent } from './invoices/invoices-list/invoices-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'clients', pathMatch: 'full'},

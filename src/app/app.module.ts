@@ -5,10 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InvoicesListComponent } from './invoices-list/invoices-list.component';
-import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
-import { ClientsListComponent } from './clients-list/clients-list.component';
-import { ClientDetailsComponent } from './client-details/client-details.component';
+import { InvoicesListComponent } from './invoices/invoices-list/invoices-list.component';
+import { InvoiceDetailsComponent } from './invoices/invoice-details/invoice-details.component';
+import { ClientsListComponent } from './clients/clients-list/clients-list.component';
+import { ClientDetailsComponent } from './clients/client-details/client-details.component';
 import { HeaderComponent } from './header/header.component';
 
 @NgModule({
