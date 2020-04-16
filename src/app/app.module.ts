@@ -8,6 +8,7 @@ import { InvoicesListComponent } from './invoices-list/invoices-list.component';
 import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 import { ClientsListComponent } from './clients-list/clients-list.component';
 import { ClientDetailsComponent } from './client-details/client-details.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ClientDetailsComponent } from './client-details/client-details.componen
     InvoicesListComponent,
     InvoiceDetailsComponent,
     ClientsListComponent,
-    ClientDetailsComponent
+    ClientDetailsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
