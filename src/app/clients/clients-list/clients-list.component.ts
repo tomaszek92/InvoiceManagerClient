@@ -10,6 +10,7 @@ import { Client } from '../client.model';
 export class ClientsListComponent implements OnInit {
 
   clients: Client[];
+  tableColumns: string[] = ['name', 'actions'];
 
   constructor(private clientsService: ClientsService) { }
 
@@ -18,6 +19,7 @@ export class ClientsListComponent implements OnInit {
       .getAll()
       .subscribe((clients: Client[]) => {
         this.clients = clients;
+        this.clients.sort((client1, clinet2) => client1.name.localeCompare(clinet2.name));
       });
   }
 

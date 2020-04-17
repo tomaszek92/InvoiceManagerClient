@@ -1,1 +1,35 @@
-<p>clients-list works!</p>
+<div class="row mt-4">
+    <div class="col">
+        <mat-list class="mat-elevation-z8">
+            <div mat-subheader>Klienci</div>
+            <mat-list-item *ngFor="let client of clients">
+              <mat-icon mat-list-icon>account_circle</mat-icon>
+              <div mat-line>{{ client.name }}</div>
+              <div mat-line>{{ client.nip }} </div>
+              <mat-action-list>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                      <mat-icon>edit</mat-icon>
+                      <span>Edytuj</span>
+                    </button>
+                    <button mat-menu-item>
+                      <mat-icon>delete</mat-icon>
+                      <span>Usuń</span>
+                    </button>
+                  </mat-menu>
+              </mat-action-list>
+            </mat-list-item>            
+        </mat-list>
+    </div>
+</div>
+
+<div class="fixed-bottom pr-4 pb-4">
+    <div class="float-right">
+        <button mat-fab color="primary">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</div>
