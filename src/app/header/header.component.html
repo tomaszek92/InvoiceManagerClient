@@ -1,17 +1,14 @@
-<header class="navbar navbar-expand-lg navbar-light bg-light">
-    <span class="navbar-brand">Invoice Manager</span>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item" [class.active]="isActive('/invoices')">
-                <a routerLink="/invoices" class="nav-link">Faktury</a>
-            </li>
-            <li class="nav-item" [class.active]="isActive('/clients')">
-                <a routerLink="/clients" class="nav-link">Klienci</a>
-            </li>        
-        </ul>
-    </div>
+<header class="mat-elevation-z5">
+    <nav class="navbar-header">
+        <a mat-button routerLink="/">
+            <mat-icon>account_balance</mat-icon>
+            Invoice Manager
+        </a>
+        <a mat-button routerLink="/invoices" class="d-none d-md-inline-block">Faktury</a>
+        <a mat-button routerLink="/clients" class="d-none d-md-inline-block">Klienci</a>
+    </nav>
+    <nav class="navbar-header d-flex d-md-none">
+        <a mat-button routerLink="/invoices">Faktury</a>
+        <a mat-button routerLink="/clients">Klienci</a>
+    </nav>
 </header>

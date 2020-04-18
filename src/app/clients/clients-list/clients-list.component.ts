@@ -19,11 +19,13 @@ export class ClientsListComponent implements OnInit {
 
     this.clientsService
       .getAll()
-      .subscribe((clients: Client[]) => {
-        this.clients = clients;
-        this.clients.sort((client1, clinet2) => client1.name.localeCompare(clinet2.name));
-        this.isLoading = false;
-      });
+      .subscribe(
+        clients => {
+          this.clients = clients;
+          this.clients.sort((client1, clinet2) => client1.name.localeCompare(clinet2.name));
+        },
+        error => {},
+        () => this.isLoading = false);
   }
 
 }
