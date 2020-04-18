@@ -8,3 +8,12 @@ button {
         outline: none;
     }
 }
+
+a {
+    color: inherit;
+
+    &:hover {
+        text-decoration: none;
+        color: #3f51b5;
+    }
+}

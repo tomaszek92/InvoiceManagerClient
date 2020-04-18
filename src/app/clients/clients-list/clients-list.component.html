@@ -1,28 +1,57 @@
 <div class="row mt-4">
     <div class="col">
-        <mat-list class="mat-elevation-z8">
-            <div mat-subheader>Klienci</div>
-            <mat-list-item *ngFor="let client of clients">
-              <mat-icon mat-list-icon>account_circle</mat-icon>
-              <div mat-line>{{ client.name }}</div>
-              <div mat-line>{{ client.nip }} </div>
-              <mat-action-list>
-                <button mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
-                      <mat-icon>edit</mat-icon>
-                      <span>Edytuj</span>
+      <mat-card class="mat-elevation-z4">
+          <mat-card-header>
+            <mat-card-title class="my-2">Klienci</mat-card-title>
+          </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="isLoading; then isLoadingBlock else isNotLoadingBlock"></div>
+          
+          <ng-template #isLoadingBlock>
+            <div style="height: 10rem;">
+              <app-loader></app-loader>
+            </div>
+          </ng-template>
+
+          <ng-template #isNotLoadingBlock>
+            <div *ngIf="clients.length === 0; then emptyClientsBlock else clientsBlock"></div>
+
+            <ng-template #emptyClientsBlock>
+              <div class="d-flex align-items-center justify-content-center" style="height: 10rem;">
+                <h3 class="mat-subheading-2">Brak klientów. Dodaj klientów.</h3>
+              </div>
+            </ng-template>
+
+            <ng-template #clientsBlock>
+              <mat-list>
+                <mat-list-item *ngFor="let client of clients">
+                  <mat-icon mat-list-icon>person</mat-icon>
+                  <div mat-line>
+                    <a [routerLink]="['/clients', client.id]">{{ client.name }}</a>                
+                  </div>
+                  <div mat-line>{{ client.nip }} </div>
+                  <mat-action-list>
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
                     </button>
-                    <button mat-menu-item>
-                      <mat-icon>delete</mat-icon>
-                      <span>Usuń</span>
-                    </button>
-                  </mat-menu>
-              </mat-action-list>
-            </mat-list-item>            
-        </mat-list>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item>
+                        <mat-icon>edit</mat-icon>
+                        <span>Edytuj</span>
+                      </button>
+                      <button mat-menu-item>
+                        <mat-icon>delete</mat-icon>
+                        <span>Usuń</span>
+                      </button>
+                    </mat-menu>
+                  </mat-action-list>
+                </mat-list-item>
+              </mat-list>
+            </ng-template>
+          </ng-template>
+          
+        </mat-card-content>
+      </mat-card>
     </div>
 </div>
 

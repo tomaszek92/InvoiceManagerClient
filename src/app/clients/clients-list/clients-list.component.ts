@@ -10,16 +10,19 @@ import { Client } from '../client.model';
 export class ClientsListComponent implements OnInit {
 
   clients: Client[];
-  tableColumns: string[] = ['name', 'actions'];
+  isLoading: boolean;
 
   constructor(private clientsService: ClientsService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
+
     this.clientsService
       .getAll()
       .subscribe((clients: Client[]) => {
         this.clients = clients;
         this.clients.sort((client1, clinet2) => client1.name.localeCompare(clinet2.name));
+        this.isLoading = false;
       });
   }
 

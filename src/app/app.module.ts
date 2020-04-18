@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +17,7 @@ import { InvoiceDetailsComponent } from './invoices/invoice-details/invoice-deta
 import { ClientsListComponent } from './clients/clients-list/clients-list.component';
 import { ClientDetailsComponent } from './clients/client-details/client-details.component';
 import { HeaderComponent } from './header/header.component';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { HeaderComponent } from './header/header.component';
     InvoiceDetailsComponent,
     ClientsListComponent,
     ClientDetailsComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -32,9 +36,11 @@ import { HeaderComponent } from './header/header.component';
     HttpClientModule,
 
     MatButtonModule,
+    MatCardModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
