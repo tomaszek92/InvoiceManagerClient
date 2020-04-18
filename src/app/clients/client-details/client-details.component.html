@@ -1,1 +1,56 @@
-<p>client-details works!</p>
+<div class="row mt-4">
+    <div class="col">
+      <mat-card class="mat-elevation-z4">
+            <form [formGroup]="clientForm" autocomplete="off" novalidate (ngSubmit)="saveClient(clientForm.value)">
+                <mat-card-header>
+                    <mat-card-title class="my-2">{{ getTitle() }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div *ngIf="isLoading; then isLoadingBlock else isNotLoadingBlock"></div>
+          
+                    <ng-template #isLoadingBlock>
+                        <div style="height: 10rem;">
+                            <app-loader></app-loader>
+                        </div>
+                    </ng-template>
+
+                    <ng-template #isNotLoadingBlock>
+                        <mat-form-field>
+                            <mat-label>Nazwa</mat-label>
+                            <input matInput type="text" formControlName="name">
+                            <mat-error *ngIf="hasError('name', 'required')">Nazwa jest wymagana</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>NIP</mat-label>
+                            <input matInput type="text" formControlName="nip">
+                            <mat-error *ngIf="hasError('nip', 'required')">NIP jest wymagany</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Adres</mat-label>
+                            <input matInput type="text" formControlName="address">
+                            <mat-error *ngIf="hasError('address', 'required')">Adres jest wymagany</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Kraj</mat-label>
+                            <input matInput type="text" formControlName="country">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Email</mat-label>
+                            <input matInput type="email" formControlName="email">
+                            <mat-error *ngIf="hasError('email', 'email')">Email jest niepoprawny</mat-error>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Numer telefonu</mat-label>
+                            <input matInput type="text" formControlName="phoneNumber">
+                        </mat-form-field>
+                    </ng-template>
+          
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" [disabled]="!clientForm.valid">{{ getTitle() }}</button>
+                    <button type="button" mat-raised-button color="warn" (click)="cancel()">Anuluj</button>
+                </mat-card-actions>
+        </form>
+    </mat-card>
+    </div>
+</div>

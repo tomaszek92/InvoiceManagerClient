@@ -35,11 +35,11 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                      <button mat-menu-item>
+                      <a mat-menu-item [routerLink]="['/clients', client.id]">
                         <mat-icon>edit</mat-icon>
                         <span>Edytuj</span>
-                      </button>
-                      <button mat-menu-item>
+                      </a>
+                      <button mat-menu-item (click)="deleteClient(client.id)">
                         <mat-icon>delete</mat-icon>
                         <span>Usuń</span>
                       </button>
@@ -57,8 +57,8 @@
 
 <div class="fixed-bottom pr-4 pb-4">
     <div class="float-right">
-        <button mat-fab color="primary">
+        <a mat-fab color="primary" routerLink="/clients/0">
             <mat-icon>add</mat-icon>
-        </button>
+        </a>
     </div>
 </div>
