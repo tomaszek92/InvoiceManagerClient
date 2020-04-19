@@ -71,6 +71,18 @@ export class ClientDetailsComponent implements OnInit {
     }
   }
 
+  deleteClient() {
+    const clientId = parseInt(this.route.snapshot.params.id, 10);
+    this.isLoading = true;
+    this.clientsService
+      .delete(clientId)
+      .subscribe(
+        () => this.cancel(),
+        error => {},
+        () => this.isLoading = false
+      );
+  }
+
   hasError(controlName: string, errorName: string) {
     return this.clientForm.controls[controlName].hasError(errorName);
   }

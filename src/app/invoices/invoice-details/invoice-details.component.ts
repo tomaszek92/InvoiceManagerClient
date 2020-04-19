@@ -93,6 +93,18 @@ export class InvoiceDetailsComponent implements OnInit {
     }
   }
 
+  deleteInvoice() {
+    const invoiceId = parseInt(this.route.snapshot.params.id, 10);
+    this.isLoading = true;
+    this.invoicesService
+      .delete(invoiceId)
+      .subscribe(
+        () => this.cancel(),
+        error => {},
+        () => this.isLoading = false
+      );
+  }
+
   hasError(controlName: string, errorName: string) {
     return this.invoiceForm.controls[controlName].hasError(errorName);
   }

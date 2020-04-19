@@ -49,7 +49,8 @@
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-raised-button color="primary" [disabled]="!clientForm.valid">{{ getTitle() }}</button>
-                    <button type="button" mat-raised-button color="warn" (click)="cancel()">Anuluj</button>
+                    <button *ngIf="clientForm.get('id').value !== 0" type="button" mat-raised-button color="warn" (click)="deleteClient()" class="mr-0">Usuń</button>
+                    <button type="button" mat-raised-button color="basic" (click)="cancel()" class="mr-0">Anuluj</button>
                 </mat-card-actions>
         </form>
     </mat-card>
