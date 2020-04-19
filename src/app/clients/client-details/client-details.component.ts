@@ -50,7 +50,6 @@ export class ClientDetailsComponent implements OnInit {
   }
 
   saveClient(client) {
-    console.log('save', client);
     this.isLoading = true;
 
     if (this.clientForm.get('id').value === 0) {
