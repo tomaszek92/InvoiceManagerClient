@@ -32,7 +32,9 @@ export class SnackbarInterceptor implements HttpInterceptor {
 
     private showSnackBar(statusCode: number) {
         const snackBarConfig: MatSnackBarConfig = {
-            duration: this.Duration
+            duration: this.Duration,
+            horizontalPosition: 'right',
+            verticalPosition: 'bottom'
         };
 
         switch (statusCode) {

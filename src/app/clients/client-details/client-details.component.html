@@ -24,6 +24,7 @@
                             <mat-label>NIP</mat-label>
                             <input matInput type="text" formControlName="nip">
                             <mat-error *ngIf="hasError('nip', 'required')">NIP jest wymagany</mat-error>
+                            <mat-error *ngIf="hasError('nip', 'nipValid')">NIP jest niepoprawny</mat-error>
                         </mat-form-field>
                         <mat-form-field>
                             <mat-label>Adres</mat-label>
