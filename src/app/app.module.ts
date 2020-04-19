@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import localePl from '@angular/common/locales/pl';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -23,6 +25,9 @@ import { ClientDetailsComponent } from './clients/client-details/client-details.
 import { HeaderComponent } from './header/header.component';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { SnackbarInterceptor } from './interceptors/snack-bar.interceptor';
+import { AddButtonComponent } from './shared/add-button/add-button.component';
+
+registerLocaleData(localePl, 'pl');
 
 @NgModule({
   declarations: [
@@ -32,7 +37,8 @@ import { SnackbarInterceptor } from './interceptors/snack-bar.interceptor';
     ClientsListComponent,
     ClientDetailsComponent,
     HeaderComponent,
-    LoaderComponent
+    LoaderComponent,
+    AddButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +61,9 @@ import { SnackbarInterceptor } from './interceptors/snack-bar.interceptor';
     provide: HTTP_INTERCEPTORS,
     useClass: SnackbarInterceptor,
     multi: true
+  }, {
+    provide: LOCALE_ID,
+    useValue: 'pl'
   }],
   bootstrap: [AppComponent]
 })

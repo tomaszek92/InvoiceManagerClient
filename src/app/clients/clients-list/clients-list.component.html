@@ -1,64 +1,58 @@
 <div class="row mt-4">
-    <div class="col">
+  <div class="col">
       <mat-card class="mat-elevation-z4">
           <mat-card-header>
-            <mat-card-title class="my-2">Klienci</mat-card-title>
+              <mat-card-title class="my-2">Klienci</mat-card-title>
           </mat-card-header>
-        <mat-card-content>
-          <div *ngIf="isLoading; then isLoadingBlock else isNotLoadingBlock"></div>
-          
-          <ng-template #isLoadingBlock>
-            <div style="height: 10rem;">
-              <app-loader></app-loader>
-            </div>
-          </ng-template>
+          <mat-card-content>
+              <div *ngIf="isLoading; then isLoadingBlock else isNotLoadingBlock"></div>
 
-          <ng-template #isNotLoadingBlock>
-            <div *ngIf="clients.length === 0; then emptyClientsBlock else clientsBlock"></div>
-
-            <ng-template #emptyClientsBlock>
-              <div class="d-flex align-items-center justify-content-center" style="height: 10rem;">
-                <h3 class="mat-subheading-2">Brak klientów. Dodaj klientów.</h3>
-              </div>
-            </ng-template>
-
-            <ng-template #clientsBlock>
-              <mat-list>
-                <mat-list-item *ngFor="let client of clients">
-                  <mat-icon mat-list-icon>person</mat-icon>
-                  <div mat-line>
-                    <a [routerLink]="['/clients', client.id]">{{ client.name }}</a>                
+              <ng-template #isLoadingBlock>
+                  <div style="height: 10rem;">
+                      <app-loader></app-loader>
                   </div>
-                  <div mat-line>{{ client.nip }} </div>
-                  <mat-action-list>
-                    <button mat-icon-button [matMenuTriggerFor]="menu">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                      <a mat-menu-item [routerLink]="['/clients', client.id]">
-                        <mat-icon>edit</mat-icon>
-                        <span>Edytuj</span>
-                      </a>
-                      <button mat-menu-item (click)="deleteClient(client.id)">
-                        <mat-icon>delete</mat-icon>
-                        <span>Usuń</span>
-                      </button>
-                    </mat-menu>
-                  </mat-action-list>
-                </mat-list-item>
-              </mat-list>
-            </ng-template>
-          </ng-template>
-          
-        </mat-card-content>
+              </ng-template>
+
+              <ng-template #isNotLoadingBlock>
+                  <div *ngIf="clients.length === 0; then emptyClientsBlock else clientsBlock"></div>
+
+                  <ng-template #emptyClientsBlock>
+                      <div class="d-flex align-items-center justify-content-center" style="height: 10rem;">
+                          <h3 class="mat-subheading-2">Brak klientów. Dodaj klientów.</h3>
+                      </div>
+                  </ng-template>
+
+                  <ng-template #clientsBlock>
+                      <mat-list>
+                          <mat-list-item *ngFor="let client of clients">
+                              <mat-icon mat-list-icon>person</mat-icon>
+                              <div mat-line>
+                                  <a [routerLink]="['/clients', client.id]">{{ client.name }}</a>
+                              </div>
+                              <div mat-line>{{ client.nip }} </div>
+                              <mat-action-list>
+                                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                                      <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                  <mat-menu #menu="matMenu">
+                                      <a mat-menu-item [routerLink]="['/clients', client.id]">
+                                          <mat-icon>edit</mat-icon>
+                                          <span>Edytuj</span>
+                                      </a>
+                                      <button mat-menu-item (click)="deleteClient(client.id)">
+                                          <mat-icon>delete</mat-icon>
+                                          <span>Usuń</span>
+                                      </button>
+                                  </mat-menu>
+                              </mat-action-list>
+                          </mat-list-item>
+                      </mat-list>
+                  </ng-template>
+              </ng-template>
+
+          </mat-card-content>
       </mat-card>
-    </div>
+  </div>
 </div>
 
-<div class="fixed-bottom pr-4 pb-4">
-    <div class="float-right">
-        <a mat-fab color="primary" routerLink="/clients/0">
-            <mat-icon>add</mat-icon>
-        </a>
-    </div>
-</div>
+<app-add-button routerLink="/clients/0"></app-add-button>
