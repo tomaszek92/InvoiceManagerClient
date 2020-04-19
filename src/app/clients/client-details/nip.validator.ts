@@ -18,7 +18,6 @@ function isValidNip(nip: string): boolean {
 
 export function NipValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
-        console.log(control.value);
         const isValid = isValidNip(control.value);
         return !isValid ? { nipValid: true } : null;
       };

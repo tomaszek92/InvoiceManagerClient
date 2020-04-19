@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Client } from '../client.model';
 import { ClientsService } from '../clients.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -30,11 +29,11 @@ export class ClientDetailsComponent implements OnInit {
   initClientForm() {
     this.clientForm = new FormGroup({
       id: new FormControl(0),
-      name: new FormControl('', [ Validators.required ]),
-      nip: new FormControl('', [ Validators.required, NipValidator() ]),
-      address: new FormControl('', [ Validators.required ]),
+      name: new FormControl('', [Validators.required]),
+      nip: new FormControl('', [Validators.required, NipValidator()]),
+      address: new FormControl('', [Validators.required]),
       country: new FormControl(''),
-      email: new FormControl('', [ Validators.email ]),
+      email: new FormControl('', [Validators.email]),
       phoneNumber: new FormControl('')
     });
   }
@@ -53,7 +52,7 @@ export class ClientDetailsComponent implements OnInit {
   saveClient(client) {
     this.isLoading = true;
 
-    if (this.clientForm.get('id').value === 0) {
+    if (client.id === 0) {
       this.clientsService
         .create(client)
         .subscribe(
@@ -73,10 +72,6 @@ export class ClientDetailsComponent implements OnInit {
   }
 
   hasError(controlName: string, errorName: string) {
-    if (controlName === 'nip') {
-      console.log(this.clientForm.controls[controlName]);
-      console.log(this.clientForm.get('nip').errors);
-    }
     return this.clientForm.controls[controlName].hasError(errorName);
   }
 
