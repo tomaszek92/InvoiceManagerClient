@@ -3,13 +3,11 @@ import { InvoicesService } from '../invoices.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location, CurrencyPipe } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { PaymentType } from '../payment-type.model';
 import { Client } from 'src/app/clients/client.model';
 import { ClientsService } from 'src/app/clients/clients.service';
 import { Months } from './month-list';
 import { PaymentTypes } from './payment-type-list';
 import { Invoice } from '../invoice.model';
-import { Month } from '../month.model';
 import { InvoiceRow } from '../invoice-row.model';
 
 @Component({
