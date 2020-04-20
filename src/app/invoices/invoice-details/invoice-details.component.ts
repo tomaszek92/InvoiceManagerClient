@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InvoicesService } from '../invoices.service';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, CurrencyPipe } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { PaymentType } from '../payment-type.model';
 import { Client } from 'src/app/clients/client.model';
@@ -24,15 +24,19 @@ export class InvoiceDetailsComponent implements OnInit {
   clients: Client[];
   months = Months;
   paymentTypes = PaymentTypes;
+  totalSum: number;
 
   constructor(
     private invoicesService: InvoicesService,
     private clientsService: ClientsService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private currencyPipe: CurrencyPipe
   ) { }
 
   ngOnInit(): void {
+    this.totalSum = 0;
+
     this.clientsService
       .getAll()
       .subscribe(clients => {
@@ -61,6 +65,10 @@ export class InvoiceDetailsComponent implements OnInit {
       isPayed: new FormControl(invoice.isPayed),
       rows: new FormArray(invoice.rows.map(row => this.initInvoiceRowForm(row)), [Validators.required])
     });
+
+    this.invoiceForm.get('rows').valueChanges.subscribe(() => this.updateSums());
+    this.addRow();
+    this.deleteRow(invoice.rows.length);
   }
 
   initInvoiceRowForm(row: InvoiceRow) {
@@ -69,8 +77,23 @@ export class InvoiceDetailsComponent implements OnInit {
       name: new FormControl(row.name, [Validators.required]),
       count: new FormControl(row.count, [Validators.required, Validators.min(1)]),
       vatRate: new FormControl(row.vatRate, [Validators.required, Validators.min(0)]),
-      unitPriceNet: new FormControl(row.unitPriceNet, [Validators.required, Validators.min(0)])
+      unitPriceNet: new FormControl(row.unitPriceNet, [Validators.required, Validators.min(0)]),
+      sum: new FormControl({ value: '', disabled: true })
     });
+  }
+
+  updateSums() {
+    this.totalSum = 0;
+    const controls = this.getRowControls();
+    for (const control of controls) {
+      const count = control.get('count').value as number;
+      const vatRate = control.get('vatRate').value as number;
+      const unitPriceNet = control.get('unitPriceNet').value as number;
+      const sum = count * (vatRate / 100 * unitPriceNet + unitPriceNet);
+      const formattedSum = this.currencyPipe.transform(sum, 'PLN ');
+      control.get('sum').setValue(formattedSum, { onlySelf: true, emitEvent: false });
+      this.totalSum += sum;
+    }
   }
 
   getInvoice(id: number) {
@@ -107,10 +130,9 @@ export class InvoiceDetailsComponent implements OnInit {
   }
 
   deleteInvoice() {
-    const invoiceId = parseInt(this.route.snapshot.params.id, 10);
     this.isLoading = true;
     this.invoicesService
-      .delete(invoiceId)
+      .delete(this.invoiceForm.get('id').value)
       .subscribe(
         () => this.cancel(),
         error => {},

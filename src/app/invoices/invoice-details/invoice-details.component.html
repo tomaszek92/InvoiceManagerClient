@@ -100,15 +100,27 @@
                                     <mat-form-field> 
                                         <mat-label>Liczba</mat-label>
                                         <input matInput type="number" formControlName="count">
+                                        <mat-error *ngIf="hasRowError('count', i, 'required')">Liczba jest wymagana</mat-error>
+                                        <mat-error *ngIf="hasRowError('count', i, 'min')">Liczba musi być większa/równa 1</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field> 
                                         <mat-label>Stawka VAT</mat-label>
                                         <input matInput type="number" formControlName="vatRate">
+                                        <mat-error *ngIf="hasRowError('vatRate', i, 'required')">Stawka VAT jest wymagana</mat-error>
+                                        <mat-error *ngIf="hasRowError('vatRate', i, 'min')">Stawka VAT musi być większa/równa 0</mat-error>
                                     </mat-form-field>
                                 
                                     <mat-form-field> 
+                                        <mat-label>Cenna netto</mat-label>
                                         <input matInput type="number" formControlName="unitPriceNet">
+                                        <mat-error *ngIf="hasRowError('unitPriceNet', i, 'required')">Cenna netto jest wymagana</mat-error>
+                                        <mat-error *ngIf="hasRowError('unitPriceNet', i, 'min')">Cenna netto musi być większa/równa 0</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <mat-label>Suma brutto</mat-label>
+                                        <input matInput formControlName="sum">
                                     </mat-form-field>
                 
                                     <button type="button" mat-mini-fab color="warn" *ngIf="getRowControls().length > 1" (click)="deleteRow(i)">
@@ -123,6 +135,12 @@
                             </button>
                         </mat-card-actions>
                     </mat-card>
+
+                    <div class="mt-4">
+                        <h3>
+                            Suma: {{ totalSum | currency:'PLN ' }}
+                        </h3>
+                    </div>
 
                 </mat-card-content>
                 <mat-card-actions>

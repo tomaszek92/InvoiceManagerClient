@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, CurrencyPipe } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -72,7 +72,8 @@ registerLocaleData(localePl, 'pl');
   }, {
     provide: LOCALE_ID,
     useValue: 'pl'
-  }],
+  },
+  CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
