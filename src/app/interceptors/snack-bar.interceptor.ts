@@ -33,21 +33,21 @@ export class SnackbarInterceptor implements HttpInterceptor {
     private showSnackBar(statusCode: number) {
         const snackBarConfig: MatSnackBarConfig = {
             duration: this.Duration,
-            horizontalPosition: 'right',
+            horizontalPosition: 'left',
             verticalPosition: 'bottom'
         };
 
         switch (statusCode) {
             case HttpStatusCode.Created:
-                snackBarConfig.panelClass = [  'mat-toolbar', 'mat-primary' ];
+                snackBarConfig.panelClass = ['mat-toolbar', 'mat-primary'];
                 this.matSnackBar.open('Stworzono', '', snackBarConfig);
                 break;
             case HttpStatusCode.NoContent:
-                snackBarConfig.panelClass = [ 'mat-toolbar', 'mat-primary' ];
+                snackBarConfig.panelClass = ['mat-toolbar', 'mat-primary'];
                 this.matSnackBar.open('Zapisano', '', snackBarConfig);
                 break;
             case HttpStatusCode.InternalServerError:
-                snackBarConfig.panelClass = [  'mat-toolbar', 'mat-warn' ];
+                snackBarConfig.panelClass = ['mat-toolbar', 'mat-warn'];
                 this.matSnackBar.open('Wystąpił błąd, spróbuj ponwnie za chwilę', '', snackBarConfig);
                 break;
             default:
