@@ -18,6 +18,7 @@
                         <mat-form-field>
                             <mat-label>Rok</mat-label>
                             <input matInput type="number" formControlName="year">
+                            <mat-error *ngIf="hasError('year', 'required')">Rok jest wymagany</mat-error>
                             <mat-error *ngIf="hasError('year', 'min')">Rok musi być większy/równy 2000</mat-error>
                         </mat-form-field>
 
@@ -27,12 +28,14 @@
                                 <mat-option *ngFor="let month of months" [value]="month.id">
                                     {{ month.name }}
                                 </mat-option>
-                              </mat-select>
+                            </mat-select>
+                            <mat-error *ngIf="hasError('month', 'required')">Miesiąc jest wymagany</mat-error>
                         </mat-form-field>
 
                         <mat-form-field>
                             <mat-label>Numer</mat-label>
                             <input matInput type="number" formControlName="number">
+                            <mat-error *ngIf="hasError('number', 'required')">Numer jest wymagany</mat-error>
                             <mat-error *ngIf="hasError('number', 'min')">Numer musi być większy/równy 1</mat-error>
                         </mat-form-field>
 
@@ -63,12 +66,20 @@
                         </mat-form-field>
 
                         <mat-form-field>
+                            <mat-label>Czas płatności w dniach</mat-label>
+                            <input matInput type="number" formControlName="paytime">
+                            <mat-error *ngIf="hasError('paytime', 'required')">Czas płatności jest wymagany</mat-error>
+                            <mat-error *ngIf="hasError('paytime', 'min')">Czas płatności musi być większy/równy 1</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field>
                             <mat-label>Rodzaj płatności</mat-label>
                             <mat-select formControlName="paymentType">
                                 <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
                                     {{ paymentType.name }}
                                 </mat-option>
-                              </mat-select>
+                            </mat-select>
+                            <mat-error *ngIf="hasError('paymentType', 'required')">Rodzaj płatności jest wymagany</mat-error>
                         </mat-form-field>
 
                         <mat-checkbox formControlName="isPayed" color="primary">Czy zapłacono</mat-checkbox>
@@ -78,7 +89,7 @@
                 </mat-card-content>
                 <mat-card-actions>
                     <button mat-raised-button color="primary" [disabled]="!invoiceForm.valid">{{ getTitle() }}</button>
-                    <button *ngIf="invoiceForm.get('id').value !== 0" type="button" mat-raised-button color="warn" (click)="deleteInvoice()" class="mr-0">Usuń</button>
+                    <button *ngIf="invoiceForm.get('id').value" type="button" mat-raised-button color="warn" (click)="deleteInvoice()" class="mr-0">Usuń</button>
                     <button type="button" mat-raised-button color="basic" (click)="cancel()" class="mr-0">Anuluj</button>
                 </mat-card-actions>
         </form>

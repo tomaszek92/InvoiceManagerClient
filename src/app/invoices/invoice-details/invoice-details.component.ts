@@ -8,6 +8,8 @@ import { Client } from 'src/app/clients/client.model';
 import { ClientsService } from 'src/app/clients/clients.service';
 import { Months } from './month-list';
 import { PaymentTypes } from './payment-type-list';
+import { Invoice } from '../invoice.model';
+import { Month } from '../month.model';
 
 @Component({
   selector: 'app-invoice-details',
@@ -37,26 +39,25 @@ export class InvoiceDetailsComponent implements OnInit {
         this.clients.sort((client1, clinet2) => client1.name.localeCompare(clinet2.name));
       });
 
-    this.initInvoiceForm();
-
+    this.initInvoiceForm(new Invoice());
     const invoiceId = parseInt(this.route.snapshot.params.id, 10);
     if (invoiceId) {
       this.getInvoice(invoiceId);
     }
   }
 
-  initInvoiceForm() {
+  initInvoiceForm(invoice: Invoice) {
     this.invoiceForm = new FormGroup({
-      id: new FormControl(0),
-      year: new FormControl(new Date().getFullYear(), [Validators.min(2000)]),
-      month: new FormControl(new Date().getMonth() + 1),
-      number: new FormControl(null, [Validators.min(1)]),
-      clientId: new FormControl(null, [Validators.required]),
-      sellDate: new FormControl(new Date(), [Validators.required]),
-      issueDate: new FormControl(new Date(), [Validators.required]),
-      paytime: new FormControl(1, [Validators.min(1)]),
-      paymentType: new FormControl(PaymentType.BankTransfer),
-      isPayed: new FormControl(false)
+      id: new FormControl(invoice.id),
+      year: new FormControl(invoice.year, [Validators.required, Validators.min(2000)]),
+      month: new FormControl(invoice.month, [Validators.required]),
+      number: new FormControl(invoice.number, [Validators.required, Validators.min(1)]),
+      clientId: new FormControl(invoice.clientId, [Validators.required]),
+      sellDate: new FormControl(invoice.sellDate, [Validators.required]),
+      issueDate: new FormControl(invoice.issueDate, [Validators.required]),
+      paytime: new FormControl(invoice.paytime, [Validators.required, Validators.min(1)]),
+      paymentType: new FormControl(invoice.paymentType, [Validators.required]),
+      isPayed: new FormControl(invoice.isPayed)
     });
   }
 
@@ -65,7 +66,7 @@ export class InvoiceDetailsComponent implements OnInit {
     this.invoicesService
       .getById(id)
       .subscribe(
-        invoice => this.invoiceForm.setValue(invoice),
+        invoice => this.initInvoiceForm(invoice),
         error => {},
         () => this.isLoading = false
       );
@@ -74,19 +75,19 @@ export class InvoiceDetailsComponent implements OnInit {
   saveInvoice(invoice) {
     this.isLoading = true;
 
-    if (invoice === 0) {
+    if (invoice.id) {
       this.invoicesService
-        .create(invoice)
+        .update(invoice)
         .subscribe(
-          i => this.invoiceForm.setValue(i),
+          () => {},
           error => {},
           () => this.isLoading = false
         );
     } else {
       this.invoicesService
-        .update(invoice)
+        .create(invoice)
         .subscribe(
-          () => {},
+          i => this.initInvoiceForm(i),
           error => {},
           () => this.isLoading = false
         );
@@ -115,7 +116,7 @@ export class InvoiceDetailsComponent implements OnInit {
 
   getTitle(): string {
     const id = this.invoiceForm.get('id').value;
-    return id === 0 ? 'Dodaj' : 'Edytuj';
+    return id ? 'Edytuj' : 'Dodaj';
   }
 
 }

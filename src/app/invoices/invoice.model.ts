@@ -16,4 +16,9 @@ export class Invoice {
     rows: InvoiceRow[];
     priceNet: number;
     priceGross: number;
+
+    constructor() {
+        this.id = 0;
+        this.isPayed = false;
+    }
 }
