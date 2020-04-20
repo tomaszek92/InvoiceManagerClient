@@ -6,4 +6,8 @@ export class InvoiceRow {
     unitPriceNet: number;
     unitPriceGross: number;
     invoiceId: number;
+
+    constructor() {
+        this.id = 0;
+    }
 }

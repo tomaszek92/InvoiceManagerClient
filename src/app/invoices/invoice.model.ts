@@ -20,5 +20,6 @@ export class Invoice {
     constructor() {
         this.id = 0;
         this.isPayed = false;
+        this.rows = [];
     }
 }

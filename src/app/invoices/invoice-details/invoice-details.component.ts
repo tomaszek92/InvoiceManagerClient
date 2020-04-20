@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InvoicesService } from '../invoices.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { PaymentType } from '../payment-type.model';
 import { Client } from 'src/app/clients/client.model';
 import { ClientsService } from 'src/app/clients/clients.service';
@@ -10,6 +10,7 @@ import { Months } from './month-list';
 import { PaymentTypes } from './payment-type-list';
 import { Invoice } from '../invoice.model';
 import { Month } from '../month.model';
+import { InvoiceRow } from '../invoice-row.model';
 
 @Component({
   selector: 'app-invoice-details',
@@ -57,7 +58,18 @@ export class InvoiceDetailsComponent implements OnInit {
       issueDate: new FormControl(invoice.issueDate, [Validators.required]),
       paytime: new FormControl(invoice.paytime, [Validators.required, Validators.min(1)]),
       paymentType: new FormControl(invoice.paymentType, [Validators.required]),
-      isPayed: new FormControl(invoice.isPayed)
+      isPayed: new FormControl(invoice.isPayed),
+      rows: new FormArray(invoice.rows.map(row => this.initInvoiceRowForm(row)), [Validators.required])
+    });
+  }
+
+  initInvoiceRowForm(row: InvoiceRow) {
+    return new FormGroup({
+      id: new FormControl(row.id),
+      name: new FormControl(row.name, [Validators.required]),
+      count: new FormControl(row.count, [Validators.required, Validators.min(1)]),
+      vatRate: new FormControl(row.vatRate, [Validators.required, Validators.min(0)]),
+      unitPriceNet: new FormControl(row.unitPriceNet, [Validators.required, Validators.min(0)])
     });
   }
 
@@ -110,6 +122,15 @@ export class InvoiceDetailsComponent implements OnInit {
     return this.invoiceForm.controls[controlName].hasError(errorName);
   }
 
+  hasRowError(controlName: string, index: number, errorName: string) {
+    const rowFormGroup = (this.invoiceForm.get('rows') as FormArray).controls[index] as FormGroup;
+    return rowFormGroup.controls[controlName].hasError(errorName);
+  }
+
+  getRowControls() {
+    return (this.invoiceForm.get('rows') as FormArray).controls;
+  }
+
   cancel() {
     this.location.back();
   }
@@ -117,6 +138,16 @@ export class InvoiceDetailsComponent implements OnInit {
   getTitle(): string {
     const id = this.invoiceForm.get('id').value;
     return id ? 'Edytuj' : 'Dodaj';
+  }
+
+  addRow() {
+    const control = this.invoiceForm.get('rows') as FormArray;
+    control.push(this.initInvoiceRowForm(new InvoiceRow()));
+  }
+
+  deleteRow(i: number) {
+    const control = this.invoiceForm.get('rows') as FormArray;
+    control.removeAt(i);
   }
 
 }
